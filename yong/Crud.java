@@ -1,9 +1,16 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+
+/**
+ * 저장소 : 메모리, 캐시, 파일, 데이터베이스
+ * 데이터베이스 : DBMS -> 데이터 하우스
+ * oralc, posgtresql, mysql, maria, tibero, sqlite
+ *
+ */
+
+
 
 /**
  * Project : yong
@@ -26,10 +33,7 @@ public class Crud {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
-
-//        Crud crud = new Crud();
     }
 }
 
@@ -99,23 +103,23 @@ class Menu {
         switch (input) {
 
             case "1":
-                    dataRead();
+                dataRead();
                 break;
 
             case "2":
-                    dataSave();
+                dataSave();
                 break;
 
             case "3":
-                    dataEdit();
+                dataEdit();
                 break;
 
             case "4":
-                    dataDel();
+                dataDel();
                 break;
             case "5":
                 System.out.println("잘가~");
-                    return false;
+                return false;
             default:
                 System.out.println("잘못된 메뉴 선택");
         }
@@ -169,7 +173,15 @@ class Menu {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        p.setNum(this.list.size());
+//        p.setNum(this.list.size()); // 버그 같은 번호 발생
+//        int num = this.list.isEmpty() ? 0 :
+//                this.list.stream().max(Comparator.comparingInt(Person::getNum)).get().getNum() + 1;
+//
+        int num2 = this.list.isEmpty() ? 0 : this.list.get(this.list.size() - 1).getNum() + 1;
+//
+//        p.setNum(num);
+        p.setNum(num2);
+
         this.list.add(p);
         this.list.sort(Comparator.comparing(Person::getNum));
     }
@@ -177,7 +189,7 @@ class Menu {
     private void dataRead() {
         System.out.println("조회 시작");
         for (Person p:
-        this.list) {
+                this.list) {
             System.out.println(p.toString());
         }
         System.out.println("조회 끝");
